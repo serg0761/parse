@@ -40,8 +40,10 @@ def visualize_common_words(link):
 
 def get_first_link(link):
     list1 = get_topic_page(link)
-    first_link = re.findall(r'<ul><li><a rel="nofollow" class="external text" href="(.*?)"',list1)
-    return first_link[0]
+    links = re.findall(r'a rel="nofollow" class="external text" href="http(.*?)"',list1)
+    first_link = 'http' + links[0]
+    
+    return first_link
     
 topic = str(input())
 
@@ -49,4 +51,4 @@ link = get_link(topic)
 first_link = get_first_link(link)
 print(first_link)
 
-print(visualize_common_words(first_link))
+visualize_common_words(first_link)
