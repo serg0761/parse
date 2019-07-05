@@ -33,7 +33,7 @@ def hh_parse(link, head):
  
 
         
-lang = str(input('Введите язык прогназирования?'))
+lang = str(input('Введите язык программирования?'))
 
 head = {'accept':'*/*', 
            'user-agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
