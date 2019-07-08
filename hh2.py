@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests
-from pymongo import MongoClient
+#from pymongo import MongoClient
 
 
 def get_link(lang, page):
@@ -12,7 +12,7 @@ def get_link(lang, page):
 
 
 def hh_parse(link, head):
-    result =  {}
+    result =  []
     session = requests.Session()
     request = session.get(link,headers = head)
     if request.status_code == 200:
@@ -60,15 +60,24 @@ def hh_parse(link, head):
                     max_salary = max(res_salary)
                     
                 
-            result[str(title)] = href, min_salary, max_salary
+            result.append([str(title), href, min_salary, max_salary])
     else:
         print('NO OK')
     
     return result
  
 
-def to_db(data):
-    hhdbs.insert(data)
+#def to_db(data):
+#    hhdbs.insert(data)
+#    client = MongoClient('mongodb://127.0.0.1:27017')
+#    db = client['goods']
+#    goodsdb = db.goods
+#     good_data={
+#        'name': good_links[i*2]['title'],
+#        'href': 'https://www.avito.ru'+good_links[i*2]['href'],
+#        'price': price[i]['content']
+#    }
+#    goodsdb.insert(good_data)
 
 
 
@@ -81,10 +90,12 @@ head = {'accept':'*/*',
     'user-agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
 
 
-vacancies = {}
-for page in range(0, 2):
+vacancies = []
+for page in range(0, 3):
     link = get_link(lang, page)
-    vacancies.update()
+    print(page)
+    print(hh_parse(link, head))
+    #vacancies.append(hh_parse(link, head))
 
 
 print(vacancies)
