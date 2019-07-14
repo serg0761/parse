@@ -60,11 +60,17 @@ def hh_parse(link, head):
                     max_salary = max(res_salary)
                     
                 
-            result.append([str(title), href, min_salary, max_salary])
+            result.append({'title':str(title),
+                           'href':href,
+                           'min_salary':min_salary,
+                           'max_salary':max_salary})
     else:
-        print('NO OK')
-    
+        print('NOT OK')    
     return result
+
+
+def find_min(db, want_min):   
+    return  vacdb.find({'min_salary':{'$gt':want_min}})
  
 
 
@@ -78,12 +84,13 @@ client = MongoClient('mongodb://127.0.0.1:27017')
 
 db = client['vacancies']
 vacdb = db.vacancies
-#vacancies = []
+
 for page in range(0, 3):
     link = get_link(lang, page)
     vaks = hh_parse(link, head)
-    data = {'vacancy':vaks[0],
-            'href':vaks[1],
-            'min_salary':vaks[2],
-            'max_salary':vaks[3]}
-    vacdb.insert(data)
+    if vaks:
+        vacdb.insert_many(vaks)
+
+result = find_min(vacdb, 120000)
+for res in result:
+    print(res)
